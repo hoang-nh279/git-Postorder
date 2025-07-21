@@ -5,44 +5,47 @@ public class BinarySearchTree {
     BinarySearchTree() {
         root = null;
     }
-    // Phương thức thêm một giá trị vào BST
+
+    // Phương thức thêm một giá trị vào BST (giữ nguyên)
     void insert(int key) {
         root = insertRec(root, key);
     }
 
-    // Phương thức đệ quy để thêm một nút
     Node insertRec(Node root, int key) {
-        // Nếu cây rỗng, tạo nút mới
         if (root == null) {
             root = new Node(key);
             return root;
         }
 
-        // Ngược lại, duyệt xuống cây
         if (key < root.key)
             root.left = insertRec(root.left, key);
         else if (key > root.key)
             root.right = insertRec(root.right, key);
 
-        // Trả về con trỏ nút (không đổi)
         return root;
     }
 
-    // Phương thức duyệt Post-order công khai
-    void postorder() {
-        System.out.print("Duyệt Post-order: ");
-        postorderRec(root);
+    // =========================================================
+    // PHƯƠNG THỨC DUYỆT PRE-ORDER
+    // =========================================================
+
+    // Phương thức duyệt Pre-order công khai
+    void preorder() {
+        System.out.print("Duyệt Pre-order: ");
+        preorderRec(root);
         System.out.println();
     }
 
-    // Phương thức đệ quy để duyệt Post-order
-    void postorderRec(Node root) {
+    // Phương thức đệ quy để duyệt Pre-order
+    void preorderRec(Node root) {
         if (root != null) {
-            postorderRec(root.left);  // 1. Duyệt cây con trái
-            postorderRec(root.right); // 2. Duyệt cây con phải
-            System.out.print(root.key + " "); // 3. Thăm nút gốc
+            System.out.print(root.key + " "); // 1. Thăm nút gốc
+            preorderRec(root.left);           // 2. Duyệt cây con trái
+            preorderRec(root.right);          // 3. Duyệt cây con phải
         }
     }
+
+    // (Các phương thức khác như inorder, postorder, delete có thể được giữ lại nếu cần)
 
     public static void main(String[] args) {
         BinarySearchTree tree = new BinarySearchTree();
@@ -64,7 +67,7 @@ public class BinarySearchTree {
         tree.insert(31);
         tree.insert(42);
 
-        // Thực hiện duyệt Post-order
-        tree.postorder(); // Expected Output: 10 19 14 31 42 35 27
+        // Thực hiện duyệt Pre-order
+        tree.preorder(); // Expected Output: 27 14 10 19 35 31 42
     }
 }
